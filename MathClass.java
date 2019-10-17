@@ -7,38 +7,38 @@ public class MathClass {
 
 //	Problem 1
 
-	static void oddOrEven(int number) {
+	public static void oddOrEven(int number) {
 		System.out.println((number % 2 == 0 ? "even" : "odd"));
 	}
 
 //	Problem 2
 
-	static void isDivisible(int num1, int num2) {
+	public static void isDivisible(int num1, int num2) {
 
 		System.out.println((num1 % num2 == 0 || num2 % num1 == 0) ? 1 : 0);
 	}
 
 //	Problem 3
 
-	static void sum(int n) {
+	public static void sum(int n) {
 		System.out.println(n + "" + 2 * n + 3 * n);
 	}
 
 //	Problem 4
 
-	static void lastDigit(int n) {
+	public static void lastDigit(int n) {
 		System.out.println((n % 10 != 0 && n > 10) ? n % 10 + "" + (n - n % 10) / 10 : n);
 	}
 
 //	Problem 5
 
-	static void average(double num1, double num2, double num3, double num4, double num5) {
+	public static void average(double num1, double num2, double num3, double num4, double num5) {
 		System.out.println((num1 + num2 + num3 + num4 + num5) / 5);
 	}
 
 //	Problem 6
 
-	static void sort(int num1, int num2, int num3) {
+	public static void sort(int num1, int num2, int num3) {
 		if (num1 < num2) {
 			if (num2 < num3) {
 				System.out.println(num1 + ", " + num2 + ", " + num3);
@@ -60,7 +60,7 @@ public class MathClass {
 
 //	Problem 7
 
-	static void sign(int num1, int num2, int num3) {
+	public static void sign(int num1, int num2, int num3) {
 		if (num1 == 0 || num2 == 0 || num3 == 0) {
 			System.out.println("unsigned");
 		} else {
@@ -81,7 +81,7 @@ public class MathClass {
 
 //	Problem 8
 
-	static void quadratic(int a, int b, int c) {
+	public static void quadratic(int a, int b, int c) {
 		if (a == 0) {
 			System.out.println("Enter valid constants");
 		} else {
@@ -99,7 +99,7 @@ public class MathClass {
 
 //	Problem 9
 
-	static void func() {
+	public static void func() {
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
 		in.close();
@@ -119,7 +119,7 @@ public class MathClass {
 
 //	Problem 10
 
-	static void contains(int digit, int num) {
+	public static void contains(int digit, int num) {
 		while (num > 0) {
 			if (digit == num % 10) {
 				System.out.println("Yes");
@@ -134,7 +134,7 @@ public class MathClass {
 
 //	 Problem 11 WRONG ANSWER
 
-	static void reverse(int num) {
+	public static void reverse(int num) {
 	    if (num > 10) {
 	        int lastDigit = (int) (num % 10);
 	        num = num / 10;
@@ -151,7 +151,7 @@ public class MathClass {
 
 //	   Problem 12
 
-	static void area() {
+	public static void area() {
 		System.out.println("Specify the figure!");
 		Scanner in = new Scanner(System.in);
 		String figure = in.nextLine(); 
@@ -174,7 +174,7 @@ public class MathClass {
 
 //	  Problem 13
 
-	static void difference(int num) {
+	public static void difference(int num) {
 		int max, min;
 		max = min = num % 10;
 		while (num > 10) {
