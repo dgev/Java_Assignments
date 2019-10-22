@@ -5,6 +5,7 @@ public class Figure {
 	private int piece;
 	private String color;
 	private Position position;
+	private String name;
 
 	// Chess pieces
 	public static final int QUEEN = 1;
@@ -14,18 +15,36 @@ public class Figure {
 	public static final int ROOK = 5;
 	public static final int PAWN = 6;
 
-	public Figure(int piece, String color) {
-		if (isValidPiece(piece) && isValidColor(color)) {
-			this.piece = piece;
-			this.color = color;
-		}
+	public Figure() {
+
 	}
 
-	public Figure(int piece, String color, Position position) {
-		if (isValidPiece(piece) && isValidColor(color) && isValidPosition(position.x, position.y)) {
-			this.piece = piece;
-			this.color = color;
-			this.position = position;
+//	public Figure(int piece, String color, Position position) {
+//		setPiece(piece);
+//		setColor(color);
+//		setPosition(position);
+//	}
+
+	public Figure(String name, String color, Position position) {
+		setColor(color);
+		setPosition(position);
+		setName(name);
+	}
+
+	public Figure(int piece, String color, Position position, String name) {
+		setPiece(piece);
+		setColor(color);
+		setPosition(position);
+		setName(name);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		if (isValidName(name)) {
+			this.name = name;
 		}
 	}
 
@@ -33,8 +52,30 @@ public class Figure {
 		return piece;
 	}
 
+	public void setPiece(int piece) {
+		if (isValidPiece(piece)) {
+			this.piece = piece;
+		}
+	}
+
 	public String getColor() {
 		return color;
+	}
+
+	public void setColor(String color) {
+		if (isValidColor(color)) {
+			this.color = color;
+		}
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		if (isValidPosition(position.x, position.y)) {
+			this.position = position;
+		}
 	}
 
 	public int getHorizontalPosition() {
@@ -43,10 +84,6 @@ public class Figure {
 
 	public int getVerticalPosition() {
 		return position.y;
-	}
-
-	public Position getPosition() {
-		return position;
 	}
 
 	private boolean isValidPosition(int x, int y) {
@@ -64,55 +101,34 @@ public class Figure {
 		return piece >= 1 && piece <= 6;
 	}
 
-	public boolean pawnCanMove(Figure figure, Position to) {
-		if (figure.getHorizontalPosition() == to.x) {
-			if (figure.getVerticalPosition() == 1
-					&& (to.y - figure.getVerticalPosition() == 2 || to.y - figure.getVerticalPosition() == 1)) {
-				return true;
-			} else if (to.y - figure.getVerticalPosition() == 1) {
+	private boolean isValidName(String name) {
+		// TODO Auto-generated method stub
+		String[] arrayOfFigures = { "QUEEN", "KING", "PAWN", "KNIGHT", "ROOK", "BISHOP" };
+		for (String element : arrayOfFigures) {
+			if (name.toUpperCase().equals(element)) {
 				return true;
 			}
 		}
 		return false;
-
 	}
 
-	public boolean rookCanMove(Figure figure, Position to) {
-		if (figure.getHorizontalPosition() == to.x || figure.getVerticalPosition() == to.y) {
-			return true;
+	public static boolean moveIsValid(Figure figure, Position b) {
+		switch (figure.getName().toUpperCase()) {
+		case "QUEEN":
+			return Queen.isValidMoveByQueen(figure, b);
+		case "KING":
+			return King.isValidMoveByKing(figure, b);
+		case "BISHOP":
+			return Bishop.isValidMoveByBishop(figure, b);
+		case "KNIGHT":
+			return Knight.isValidMoveByKnight(figure, b);
+		case "ROOK":
+			return Rook.isValidMoveByRook(figure, b);
+		case "PAWN":
+			return Pawn.isValidMoveByPawn(figure, b);
+		default:
+			return false;
 		}
-		return false;
-
-	}
-
-	public boolean bishopCanMove(Figure figure, Position to) {
-		if (Math.abs(to.y - figure.getVerticalPosition()) == Math.abs(to.x - figure.getHorizontalPosition()))
-			return true;
-		return false;
-
-	}
-
-	public boolean knightCanMove(Figure figure, Position to) {
-		if ((Math.abs(to.x - figure.getHorizontalPosition()) == 2 && Math.abs(to.y - figure.getVerticalPosition()) == 1)
-				|| (Math.abs(to.x - figure.getHorizontalPosition()) == 1
-						&& Math.abs(to.y - figure.getVerticalPosition()) == 2))
-			return true;
-		return false;
-
-	}
-
-	public boolean queenCanMove(Figure figure, Position to) {
-		return figure.bishopCanMove(figure, to) || figure.rookCanMove(figure, to);
-
-	}
-
-	public boolean kingCanMove(Figure figure, Position to) {
-		if ((Math.abs(to.x - figure.getHorizontalPosition()) == 0 && Math.abs(to.y - figure.getVerticalPosition()) == 1)
-				|| (Math.abs(to.x - figure.getHorizontalPosition()) == 1
-						&& (Math.abs(to.y - figure.getVerticalPosition()) == 0
-								|| Math.abs(to.y - figure.getVerticalPosition()) == 1)))
-			return true;
-		return false;
 	}
 
 	public static String pieceToString(int piece) {
