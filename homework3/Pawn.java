@@ -6,19 +6,29 @@ public class Pawn extends Figure {
 		super(6, color, position, name);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Pawn(Figure pawn) {
 		super(6, pawn.getColor(), pawn.getPosition(), pawn.getName());
 		// TODO Auto-generated constructor stub
 	}
 
 	public boolean pawnCanMove(Pawn figure, Position to) {
-		if (figure.getHorizontalPosition() == to.x) {
-			if (figure.getVerticalPosition() == 1
-					&& (to.y - figure.getVerticalPosition() == 2 || to.y - figure.getVerticalPosition() == 1)) {
+		if (figure.getHorizontalPosition() == to.x && ChessBoard.occupiedBy(to) == null) {
+			if ("white".contentEquals(figure.getColor())) {
+				if ((figure.getVerticalPosition() == 1 && to.y - figure.getVerticalPosition() == 2)
+						|| to.y - figure.getVerticalPosition() == 1) {
+					return true;
+				}
+			} else if ((figure.getVerticalPosition() == 6 && (figure.getVerticalPosition() - to.y == 2)
+					|| figure.getVerticalPosition() - to.y == 1)) {
 				return true;
-			} else if (to.y - figure.getVerticalPosition() == 1) {
-				return true;
+			}
+		} else if (Math.abs(figure.getHorizontalPosition() - to.x) == 1) {
+			if (("white".contentEquals(figure.getColor()) && to.y - figure.getVerticalPosition() == 1)
+					|| (figure.getVerticalPosition() - to.y == 1 && "black".contentEquals(figure.getColor()))) {
+				if (!ChessBoard.occupiedBy(to).getColor().equals(figure.getColor())) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -26,15 +36,11 @@ public class Pawn extends Figure {
 
 	public static boolean isValidMoveByPawn(Figure figure, Position b) {
 		Pawn pawn = new Pawn(figure.getName(), figure.getColor(), figure.getPosition());
-		if (pawn.pawnCanMove(pawn, b)) {
-			if (ChessBoard.occupiedBy(b) != null) {
-				if (ChessBoard.occupiedBy(b).getColor().equals(pawn.getColor()))
-					return false;
-			}
-			if ((Math.abs(b.y - pawn.getVerticalPosition()) > 1)) {
-				return ChessBoard.LinePathIsFree(pawn.getPosition(), b);
-			}
-			return true;
+		if (ChessBoard.occupiedBy(b) != null) {
+			if (ChessBoard.occupiedBy(b).getColor().equals(pawn.getColor()))
+				return pawn.pawnCanMove(pawn, b);
+		} else if (pawn.pawnCanMove(pawn, b)) {
+			return ChessBoard.linePathIsFree(pawn.getPosition(), b);
 		}
 		return false;
 	}

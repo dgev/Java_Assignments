@@ -28,16 +28,15 @@ public class Queen extends Figure {
 	public static boolean isValidMoveByQueen(Figure figure, Position b) {
 		Queen queen = new Queen(figure.getColor(), figure.getPosition(), 1);
 		if ((queen.queenCanMove(queen, b))) {
-			if (ChessBoard.diagonalPathIsFree(queen.getPosition(), b)
-					|| ChessBoard.LinePathIsFree(queen.getPosition(), b)) {
+			if ((ChessBoard.diagonalPathIsFree(queen.getPosition(), b)
+					|| ChessBoard.linePathIsFree(queen.getPosition(), b))) {
+				if (ChessBoard.occupiedBy(b) != null) {
+					if (ChessBoard.occupiedBy(b).getColor().equals(queen.getColor())) {
+						return false;
+					}
+				}
 				return true;
 			}
-			if (ChessBoard.occupiedBy(b) != null) {
-				if (ChessBoard.occupiedBy(b).getColor().equals(queen.getColor())) {
-					return false;
-				}
-			}
-			return true;
 		}
 		return false;
 	}

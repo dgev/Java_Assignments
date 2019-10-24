@@ -10,8 +10,9 @@ public class Knight extends Figure{
 	public boolean knightCanMove(Knight figure, Position to) {
 		if ((Math.abs(to.x - figure.getHorizontalPosition()) == 2 && Math.abs(to.y - figure.getVerticalPosition()) == 1)
 				|| (Math.abs(to.x - figure.getHorizontalPosition()) == 1
-						&& Math.abs(to.y - figure.getVerticalPosition()) == 2))
+						&& Math.abs(to.y - figure.getVerticalPosition()) == 2)) {
 			return true;
+		}
 		return false;
 
 	}

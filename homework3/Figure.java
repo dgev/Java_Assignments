@@ -19,12 +19,6 @@ public class Figure {
 
 	}
 
-//	public Figure(int piece, String color, Position position) {
-//		setPiece(piece);
-//		setColor(color);
-//		setPosition(position);
-//	}
-
 	public Figure(String name, String color, Position position) {
 		setColor(color);
 		setPosition(position);

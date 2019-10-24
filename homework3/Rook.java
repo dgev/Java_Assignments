@@ -24,7 +24,7 @@ public class Rook extends Figure {
 				}
 			}
 			if (Math.abs(b.y - rook.getVerticalPosition()) > 1 || Math.abs(b.x - rook.getHorizontalPosition()) > 1) {
-				if (ChessBoard.LinePathIsFree(rook.getPosition(), b)) {
+				if (ChessBoard.linePathIsFree(rook.getPosition(), b)) {
 					return true;
 				}
 				return false;
