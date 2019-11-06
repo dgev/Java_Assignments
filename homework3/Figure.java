@@ -109,7 +109,8 @@ public class Figure {
 	public static boolean moveIsValid(Figure figure, Position b) {
 		switch (figure.getName().toUpperCase()) {
 		case "QUEEN":
-			return Queen.isValidMoveByQueen(figure, b);
+			return (Bishop.isValidMoveByBishop(figure, b) || Rook.isValidMoveByRook(figure, b));
+//			return Queen.isValidMoveByQueen(figure, b);
 		case "KING":
 			return King.isValidMoveByKing(figure, b);
 		case "BISHOP":

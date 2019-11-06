@@ -1,4 +1,4 @@
-package am.homework3;
+ package am.homework3;
 
 public class Bishop extends Figure{
 	
