@@ -6,7 +6,7 @@ public class ChessBoard {
 	public static int numPlayers = 2;
 	public static int numFigures = numPieces * numPlayers;
 	private static Figure[] figures = new Figure[numFigures];
-	
+
 	/**
 	 * ChessBoard constructor initializes the board
 	 */
@@ -43,9 +43,11 @@ public class ChessBoard {
 	public ChessBoard(Figure[] newFigures) {
 		figures = newFigures;
 	}
-	
+
 	/**
-	 * getFigure method receives position as a parameter and returns the name of the piece
+	 * getFigure method receives position as a parameter and returns the name of the
+	 * piece
+	 * 
 	 * @param position
 	 * @return String
 	 */
@@ -65,7 +67,7 @@ public class ChessBoard {
 	 * @param position
 	 * @return a figure in a specified position
 	 */
-	
+
 	public static Figure occupiedBy(Position position) {
 		for (int i = 0; i < numFigures; i++) {
 			if (figures[i].getHorizontalPosition() == position.x && figures[i].getVerticalPosition() == position.y) {
@@ -74,9 +76,20 @@ public class ChessBoard {
 		}
 		return null;
 	}
-	
+
+	public static Figure getKing(String color) {
+		for (int i = 0; i < numFigures; i++) {
+			if (figures[i] != null && figures[i].getName().equalsIgnoreCase("king")
+					&& !figures[i].getColor().equals(color)) {
+				return figures[i];
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * removes a figure from the board
+	 * 
 	 * @param position
 	 */
 
@@ -87,9 +100,10 @@ public class ChessBoard {
 			}
 		}
 	}
-	
+
 	/**
 	 * changes the position of a specified figure
+	 * 
 	 * @param figure
 	 * @param position
 	 */
@@ -104,9 +118,10 @@ public class ChessBoard {
 			}
 		}
 	}
-	
+
 	/**
 	 * checks whether the diagonal path between two positions is free or not
+	 * 
 	 * @param from
 	 * @param to
 	 * @return
@@ -135,9 +150,10 @@ public class ChessBoard {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * checks whether the horizontal path between two positions is free
+	 * 
 	 * @param from
 	 * @param to
 	 * @return
@@ -162,9 +178,10 @@ public class ChessBoard {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * checks whether the vertical path between two positions is free
+	 * 
 	 * @param from
 	 * @param to
 	 * @return
@@ -189,9 +206,10 @@ public class ChessBoard {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * validates linear paths
+	 * 
 	 * @param from
 	 * @param to
 	 * @return
@@ -205,9 +223,10 @@ public class ChessBoard {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * moves a figure from one position to another
+	 * 
 	 * @param figure
 	 * @param b
 	 */
@@ -217,6 +236,12 @@ public class ChessBoard {
 			remove(figure.getPosition());
 			changeFigure(figure, b);
 			System.out.println("Figure moved successfully!");
+			Figure kingFigure = getKing(figure.getColor());
+			if(kingFigure != null){
+				if(Figure.moveIsValid(figure, kingFigure.getPosition())) {
+					System.out.println("check to " + kingFigure.getColor());
+				}
+			}
 		} else {
 			System.out.println("Invalid Move!");
 		}
