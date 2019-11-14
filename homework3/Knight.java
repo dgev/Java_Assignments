@@ -7,7 +7,7 @@ public class Knight extends Figure {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean knightCanMove(Knight figure, Position to) {
+	public static boolean knightCanMove(Figure figure, Position to) {
 		if ((Math.abs(to.x - figure.getHorizontalPosition()) == 2
 				&& Math.abs(to.y - figure.getVerticalPosition()) == 1)) {
 			return true;
@@ -20,10 +20,10 @@ public class Knight extends Figure {
 	}
 
 	public static boolean isValidMoveByKnight(Figure figure, Position b) {
-		Knight knight = new Knight(figure.getName(), figure.getColor(), figure.getPosition());
-		if (knight.knightCanMove(knight, b)) {
+//		Knight knight = new Knight(figure.getName(), figure.getColor(), figure.getPosition());
+		if (knightCanMove(figure, b)) {
 			if (ChessBoard.occupiedBy(b) != null) {
-				if (ChessBoard.occupiedBy(b).getColor().equals(knight.getColor())) {
+				if (ChessBoard.occupiedBy(b).getColor().equals(figure.getColor())) {
 					return false;
 				}
 			}

@@ -7,7 +7,7 @@ public class King extends Figure {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean kingCanMove(King figure, Position to) {
+	public static boolean kingCanMove(Figure figure, Position to) {
 		boolean canMove = false;
 		if (Math.abs(to.x - figure.getHorizontalPosition()) == 0
 				&& Math.abs(to.y - figure.getVerticalPosition()) == 1) {
@@ -22,10 +22,10 @@ public class King extends Figure {
 	}
 
 	public static boolean isValidMoveByKing(Figure figure, Position b) {
-		King king = new King(figure.getName(), figure.getColor(), figure.getPosition());
-		if (king.kingCanMove(king, b)) {
+//		King king = new King(figure.getName(), figure.getColor(), figure.getPosition());
+		if (kingCanMove(figure, b)) {
 			if (ChessBoard.occupiedBy(b) != null) {
-				if (ChessBoard.occupiedBy(b).getColor().equals(king.getColor())) {
+				if (ChessBoard.occupiedBy(b).getColor().equals(figure.getColor())) {
 					return false;
 				}
 			}

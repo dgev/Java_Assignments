@@ -12,7 +12,7 @@ public class Pawn extends Figure {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean pawnCanMove(Pawn figure, Position to) {
+	public static boolean pawnCanMove(Figure figure, Position to) {
 		if (figure.getHorizontalPosition() == to.x && ChessBoard.occupiedBy(to) == null) {
 			if ("white".contentEquals(figure.getColor())) {
 				if ((figure.getVerticalPosition() == 1 && to.y - figure.getVerticalPosition() == 2)
@@ -35,12 +35,12 @@ public class Pawn extends Figure {
 	}
 
 	public static boolean isValidMoveByPawn(Figure figure, Position b) {
-		Pawn pawn = new Pawn(figure.getName(), figure.getColor(), figure.getPosition());
+//		Pawn pawn = new Pawn(figure.getName(), figure.getColor(), figure.getPosition());
 		if (ChessBoard.occupiedBy(b) != null) {
-			if (ChessBoard.occupiedBy(b).getColor().equals(pawn.getColor()))
-				return pawn.pawnCanMove(pawn, b);
-		} else if (pawn.pawnCanMove(pawn, b)) {
-			return ChessBoard.linePathIsFree(pawn.getPosition(), b);
+			if (ChessBoard.occupiedBy(b).getColor().equals(figure.getColor()))
+				return pawnCanMove(figure, b);
+		} else if (pawnCanMove(figure, b)) {
+			return ChessBoard.linePathIsFree(figure.getPosition(), b);
 		}
 		return false;
 	}

@@ -97,6 +97,7 @@ public class ChessBoard {
 		for (int i = 0; i < numFigures; i++) {
 			if (figures[i].getHorizontalPosition() == position.x && figures[i].getVerticalPosition() == position.y) {
 				figures[i] = null;
+				break;
 			}
 		}
 	}
@@ -128,22 +129,24 @@ public class ChessBoard {
 	 */
 
 	public static boolean diagonalPathIsFree(Position from, Position to) {
-		if (from.x == to.x) {
+		int x = from.x;
+		int y = from.y;
+		if (x == to.x) {
 			return false;
-		} else if (from.x > to.x) {
-			while (from.x != to.x - 1 || from.y != to.y - 1) {
-				from.y = (from.y < to.y ? from.y + 1 : from.y - 1);
-				from.x--;
-				if (occupiedBy(from) != null) {
+		} else if (x > to.x) {
+			while (x != to.x + 1) {
+				y = (y < to.y ? y + 1 : y - 1);
+				x--;
+				if (occupiedBy(new Position(x, y)) != null) {
 					return false;
 				}
 			}
 			return true;
 		} else {
-			while (from.x != to.x - 1 && from.y != to.y - 1) {
-				from.x++;
-				from.y = (from.y < to.y ? from.y + 1 : from.y - 1);
-				if (occupiedBy(from) != null) {
+			while (x != to.x - 1) {
+				x++;
+				y = (y < to.y ? y + 1 : y - 1);
+				if (occupiedBy(new Position(x, y)) != null) {
 					return false;
 				}
 			}
@@ -151,34 +154,7 @@ public class ChessBoard {
 		}
 	}
 
-	/**
-	 * checks whether the horizontal path between two positions is free
-	 * 
-	 * @param from
-	 * @param to
-	 * @return
-	 */
-
-	public static boolean canMoveHorizonatally(Position from, Position to) {
-		if (from.x > to.x) {
-			while (from.x != to.x - 1) {
-				from.x--;
-				if (occupiedBy(from) != null) {
-					return false;
-				}
-			}
-			return true;
-		} else {
-			while (from.x != to.x - 1) {
-				from.x++;
-				if (occupiedBy(from) != null) {
-					return false;
-				}
-			}
-			return true;
-		}
-	}
-
+	
 	/**
 	 * checks whether the vertical path between two positions is free
 	 * 
@@ -188,18 +164,20 @@ public class ChessBoard {
 	 */
 
 	public static boolean canMoveVertically(Position from, Position to) {
-		if (from.y > to.y) {
-			while (from.y != to.y - 1) {
-				from.y--;
-				if (occupiedBy(from) != null) {
+		int x = from.x;
+		int y = from.y;
+		if (y > to.y) {
+			while (y != to.y - 1) {
+				y--;
+				if (occupiedBy(new Position(x, y)) != null) {
 					return false;
 				}
 			}
 			return true;
 		} else {
-			while (from.y != to.y - 1) {
-				from.y++;
-				if (occupiedBy(from) != null) {
+			while (y != to.y - 1) {
+				y++;
+				if (occupiedBy(new Position(x, y)) != null) {
 					return false;
 				}
 			}
@@ -219,7 +197,7 @@ public class ChessBoard {
 		if (from.x == to.x) {
 			return canMoveVertically(from, to);
 		} else if (from.y == to.y) {
-			return canMoveHorizonatally(from, to);
+			return canMoveVertically(new Position(from.y, from.x), to);
 		}
 		return false;
 	}
