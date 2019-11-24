@@ -1,5 +1,3 @@
-package am.homework3;
-
 public class Pawn extends Figure {
 
 	public Pawn(String name, String color, Position position) {
@@ -12,7 +10,8 @@ public class Pawn extends Figure {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static boolean pawnCanMove(Figure figure, Position to) {
+	@Override
+	public boolean canMove(Figure figure, Position to) {
 		if (figure.getHorizontalPosition() == to.x && ChessBoard.occupiedBy(to) == null) {
 			if ("white".contentEquals(figure.getColor())) {
 				if ((figure.getVerticalPosition() == 1 && to.y - figure.getVerticalPosition() == 2)
@@ -34,12 +33,12 @@ public class Pawn extends Figure {
 		return false;
 	}
 
-	public static boolean isValidMoveByPawn(Figure figure, Position b) {
-//		Pawn pawn = new Pawn(figure.getName(), figure.getColor(), figure.getPosition());
+	@Override
+	public boolean isValidMove(Figure figure, Position b) {
 		if (ChessBoard.occupiedBy(b) != null) {
 			if (ChessBoard.occupiedBy(b).getColor().equals(figure.getColor()))
-				return pawnCanMove(figure, b);
-		} else if (pawnCanMove(figure, b)) {
+				return canMove(figure, b);
+		} else if (canMove(figure, b)) {
 			return ChessBoard.linePathIsFree(figure.getPosition(), b);
 		}
 		return false;
